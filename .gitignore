@@ -1,3 +1,5 @@
+.idea/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -26,6 +28,9 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+
+# Jetbrains IDE
+.idea/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
