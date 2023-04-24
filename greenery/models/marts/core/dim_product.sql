@@ -1,0 +1,12 @@
+{{ config(materialized='table') }}
+
+SELECT SHA2(PRODUCT_ID, 512) AS PRODUCT_PK
+     , NAME
+     , PRICE
+--FROM DEV_DB.DBT_REEVESSMITHIIIGMAILCOM.STG_PRODUCTS
+FROM {{ ref('stg_products') }}
+WHERE PRODUCT_ID IS NOT NULL
+UNION
+SELECT SHA2(-1, 512) AS PRODUCT_PK
+     , 'Unknown' AS NAME
+     , NULL AS PRICE

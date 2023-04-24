@@ -1,0 +1,31 @@
+{{ config(materialized='table') }}
+
+SELECT SHA2(T1.USER_ID, 512) AS USER_PK
+     , T1.FIRST_NAME
+     , T1.LAST_NAME
+     , T1.EMAIL
+     , T1.PHONE_NUMBER
+     , T2.ADDRESS
+     , T2.ZIPCODE
+     , T2.STATE
+     , T2.COUNTRY
+     , T1.CREATED_AT
+     , T1.UPDATED_AT
+FROM {{ ref('stg_users') }} T1
+-- FROM DEV_DB.DBT_REEVESSMITHIIIGMAILCOM.STG_USERS T1
+LEFT
+JOIN {{ ref('stg_addresses') }} T2 ON T1.ADDRESS_ID = T2.ADDRESS_ID
+-- JOIN DEV_DB.DBT_REEVESSMITHIIIGMAILCOM.STG_ADDRESSES T2 ON T1.ADDRESS_ID = T2.ADDRESS_ID
+WHERE T1.USER_ID IS NOT NULL
+UNION
+SELECT SHA2(-1, 512) AS USER_PK
+     , 'Unknown' AS FIRST_NAME
+     , 'Unknown' AS LAST_NAME
+     , 'Unknown' AS EMAIL
+     , 'Unknown' AS PHONE_NUMBER
+     , 'Unknown' AS ADDRESS
+     , NULL AS ZIPCODE
+     , 'Unknown' AS STATE
+     , 'Unknown' AS COUNTRY
+     , NULL AS CREATED_AT
+     , NULL AS UPDATED_AT

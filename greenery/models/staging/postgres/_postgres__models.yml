@@ -20,7 +20,7 @@ models:
     description: ""
 
   - name: stg_superheros
-    description: ""
+    description: "Contains demographic information about each superhero"
 
   - name: stg_users
     description: ""

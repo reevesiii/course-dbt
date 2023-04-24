@@ -1,0 +1,66 @@
+version: 2
+
+models:
+  - name: dim_address
+    description: "Dimension table for Address information for Users and Orders"
+    columns:
+      - name: ADDRESS_PK
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_date
+    description: "Dimension table for Dates"
+    columns:
+      - name: DATE_ID
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_event_type
+    description: "Dimension table for Event Types"
+    columns:
+      - name: EVENT_TYPE_PK
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_order_status
+    description: "Dimension table for Order Statuses"
+    columns:
+      - name: ORDER_STATUS_PK
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_product
+    description: "Dimension table for Products"
+    columns:
+      - name: PRODUCT_PK
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_promos
+    description: "Dimension table for Promos"
+    columns:
+      - name: PROMO_PK
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_shipping_service
+    description: "Dimension table for Shipping Service"
+    columns:
+      - name: SHIPPING_SERVICE_PK
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_user
+    description: "Dimension table for Users"
+    columns:
+      - name: USER_PK
+        tests:
+          - not_null
+          - unique
