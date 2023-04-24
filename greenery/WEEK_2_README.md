@@ -44,95 +44,38 @@ JOIN CTE_REPEAT_USERS
 
 </details>
 
-### On average, how many orders do we receive per hour?
-### 7.520833 Orders Per Hour
+### What are good indicators of a user who will likely purchase again?
 
-<details>
+#### The type of items, ie. the `Money Tree` should be a big seller. 
 
-```sql
-WITH 
-CTE_ORDER_COUNT_HOUR AS 
-(
-    SELECT DATE_TRUNC('HOUR', CREATED_AT) AS CREATED_AT_HOUR
-         , COUNT(*) AS ORDER_COUNT
-    FROM DEV_DB.DBT_REEVESSMITHIIIGMAILCOM.STG_ORDERS 
-    GROUP BY CREATED_AT_HOUR
-)
-SELECT AVG(ORDER_COUNT) AS ORDERS_PER_HOUR
-FROM CTE_ORDER_COUNT_HOUR;
-```
+### Page View - Questions
++ What are daily page views by product? 
++ Daily orders by product? 
++ What’s getting a lot of traffic, but maybe not converting into purchases?
 
-</details>
+### Order - Questions
++ first order? 
++ Last order? 
++ How many orders have they made? 
++ Total spend?
 
-### On average, how long does an order take from being placed to being delivered?
-### 3.891803 Days
+### Explain the product mart models you added: 
 
-<details>
+I added the following dimension tables to support the following fact tables
 
-```sql
-WITH
-CTE_ORDER_DURATION AS 
-(
-    SELECT DATEDIFF('DAY', CREATED_AT, DELIVERED_AT) AS ORDER_DURATION
-    FROM DEV_DB.DBT_REEVESSMITHIIIGMAILCOM.STG_ORDERS 
-    WHERE DELIVERED_AT IS NOT NULL
-)
-SELECT AVG(ORDER_DURATION) ORDER_DURATION
-FROM CTE_ORDER_DURATION;
-```
++ dim_address
++ dim_date
++ dim_event_type
++ dim_order_status
++ dim_product
++ dim_promo
++ dim_shipping_service
++ dim_user
 
-</details>
+The following fact tables support orders and order items as well as page views
 
-### How many users have only made one purchase? Two purchases? Three+ purchases?
-### 
++ fact_orders
++ fact_order_items
++ fact_page_views
 
-| Order Count | 	User Count |
-|:------------|------------:|
-| 1           |         	25 |
-| 2           |         	28 |
-| 3           |         	34 |
-| 4           |         	20 |
-| 5           |         	10 |
-| 6           |          	2 |
-| 7           |          	4 |
-| 8           |          	1 |
-
-<details>
-
-```sql
-WITH
-CTE_ORDER_DURATION AS 
-(
-    SELECT USER_ID
-         , COUNT(*) ORDER_COUNT
-    FROM DEV_DB.DBT_REEVESSMITHIIIGMAILCOM.STG_ORDERS 
-    GROUP BY USER_ID
-)
-SELECT ORDER_COUNT
-     , COUNT(*) AS USER_COUNT
-FROM CTE_ORDER_DURATION
-GROUP BY ORDER_COUNT
-ORDER BY ORDER_COUNT;
-```
-
-</details>
-
-### On average, how many unique sessions do we have per hour?
-### 16.327586 Unique Sessions Per Hour
-
-<details>
-
-```sql
-WITH 
-CTE_SESSIONS_COUNT_HOUR AS 
-(
-    SELECT DATE_TRUNC('HOUR', CREATED_AT) AS CREATED_AT_HOUR
-         , COUNT(DISTINCT SESSION_ID) AS SESSIONS
-    FROM DEV_DB.DBT_REEVESSMITHIIIGMAILCOM.STG_EVENTS
-    GROUP BY CREATED_AT_HOUR
-)
-SELECT AVG(SESSIONS) AS SESSIONS_PER_HOUR
-FROM CTE_SESSIONS_COUNT_HOUR;
-```
-
-</details>
+The tables we picked based on the staging tables and creating a holistic view of the data with dimensions for each categorical item. Some dimensions were added from degeneration dimension in the fact tables. 
