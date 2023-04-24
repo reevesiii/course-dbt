@@ -46,14 +46,14 @@ JOIN CTE_REPEAT_USERS
 
 ### What are good indicators of a user who will likely purchase again?
 
-#### The type of items, ie. the `Money Tree` should be a big seller. 
+#### People that have not purchased the `Money Tree` it should be a big seller. 
 
-### Page View - Questions
+### Page View - Questions (that are supported with the fact_page_view table)
 + What are daily page views by product? 
 + Daily orders by product? 
 + What’s getting a lot of traffic, but maybe not converting into purchases?
 
-### Order - Questions
+### Order - Questions (that are supported with the fact_order and fact_order_items table)
 + first order? 
 + Last order? 
 + How many orders have they made? 
